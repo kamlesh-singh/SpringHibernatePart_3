@@ -16,10 +16,12 @@ public class Author {
     @Embedded
     private Address address;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER,targetClass = Subject.class)
     private Set<Subject> subjects=new HashSet<>();
 
-    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name="author_book",joinColumns=@JoinColumn(name="authorid",referencedColumnName = "authorid"),
+    inverseJoinColumns = @JoinColumn(name="book_id",referencedColumnName = "bookid"))
    private Set<Book> books;
 
     public Author() {
@@ -80,5 +82,16 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "authorid=" + authorid +
+                ", name='" + name + '\'' +
+                ", address=" + address +
+                ", subjects=" + subjects +
+                ", books=" + books +
+                '}';
     }
 }

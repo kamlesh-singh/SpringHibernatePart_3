@@ -1,4 +1,4 @@
-package org.ttn.springhibernatepart3.manyToOne.entity;
+package org.ttn.springhibernatepart3.oneToOne.entity;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,46 +9,37 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int authorid;
 
     private String name;
 
     @Embedded
     private Address address;
 
-
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER,targetClass = Subject.class)
     private Set<Subject> subjects=new HashSet<>();
 
-    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-   private Set<Book> books;
+    @OneToOne(mappedBy = "author",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Book book;
 
     public Author() {
     }
 
-    public Author(int id, String name, Address address, Set<Subject> subjects, Set<Book> books) {
-        this.id = id;
+    public Author(int id, String name, Address address, Set<Subject> subjects, Book books) {
+        this.authorid = id;
         this.name = name;
         this.address = address;
         this.subjects = subjects;
-        this.books = books;
+        this.book = books;
     }
 
-    public void addBookDetails(Book bookDetails){
-        if(bookDetails!=null){
-            if(books==null){
-                books=new HashSet<>();
-            }
-            bookDetails.setAuthor(this);
-            books.add(bookDetails);
-        }
-    }
+
     public int getId() {
-        return id;
+        return authorid;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.authorid = id;
     }
 
     public String getName() {
@@ -75,22 +66,22 @@ public class Author {
         this.subjects = subjects;
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Override
     public String toString() {
         return "Author{" +
-                "id=" + id +
+                "authorid=" + authorid +
                 ", name='" + name + '\'' +
                 ", address=" + address +
                 ", subjects=" + subjects +
-                ", books=" + books +
+                ", books=" + book +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package org.ttn.springhibernatepart3.manyToOne.entity;
+package org.ttn.springhibernatepart3.oneToOne.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -23,6 +23,4 @@ public class Subject {
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
-
-
 }

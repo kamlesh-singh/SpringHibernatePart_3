@@ -1,4 +1,4 @@
-package org.ttn.springhibernatepart3;
+package org.ttn.springhibernatepart3.manyToMany;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
